@@ -1,3 +1,0 @@
-Dylan,21,Information Management
-Pauline,20,Computer Science
-Dianne,20,Computer Science
