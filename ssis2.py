@@ -1,18 +1,18 @@
 class Student:
-    def __init__(self, name, age, courses):      # called when a new instance is created
-        self.name = name           # set the name, age, and courses attributes of the new instance
-        self.age = age
+    def __init__(self, name, id, courses):      # called when a new instance is created
+        self.name = name           # set the name, id, and courses attributes of the new instance
+        self.id = id
         self.courses = courses
 
     def __repr__(self):     # returns a string representation of the object
-        return f"Student(name='{self.name}', age={self.age}, courses={self.courses})"   # return a formatted string that includes the name, age, and courses attributes of the instance
+        return f"Student(name='{self.name}', id={self.id}, courses={self.courses})"   # return a formatted string that includes the name, id, and courses attributes of the instance
 
 class StudentInformationSystem:     # constructor for the class, initializes an empty list of students
     def __init__(self):
         self.students = []
 
-    def add_student(self, name, age, courses):  # adds a new student to the list of students.
-        student = Student(name, age, courses)      # create a new Student object with the provided name, age, and courses
+    def add_student(self, name, id, courses):  # adds a new student to the list of students.
+        student = Student(name, id, courses)      # create a new Student object with the provided name, id, and courses
         self.students.append(student)              # add the new student to the list
         print(f"{name} has been added to the system.")
 
@@ -29,7 +29,7 @@ class StudentInformationSystem:     # constructor for the class, initializes an 
         for student in self.students:           # iterate through the list of students
             if student.name == name:                # if the student's name matches the provided name, the student's information is updated
                 if age is not None:
-                    student.age = age
+                    student.id = id
                 if courses is not None:
                     student.courses = courses
                 print(f"{name}'s information has been updated.")
@@ -70,13 +70,13 @@ class StudentInformationSystemGUI(QWidget): # defines a class that inherits from
         self.name_textbox.setStyleSheet('background-color: #616161; color: white; font-size: 12px; border: 1px #616161;')
         self.name_textbox.setGeometry(80, 20, 250, 25)
 
-        self.age_label = QLabel('Age:', self)
-        self.age_label.move(20, 50)
-        self.age_label.setStyleSheet('font-size: 10pt')
-        self.age_textbox = QLineEdit(self)
-        self.age_textbox.move(80, 50)
-        self.age_textbox.setStyleSheet('background-color: #616161; color: white; font-size: 12px; border: 1px #616161;')
-        self.age_textbox.setGeometry(80, 50, 250, 25)
+        self.id_label = QLabel('ID:', self)
+        self.id_label.move(20, 50)
+        self.id_label.setStyleSheet('font-size: 10pt')
+        self.id_textbox = QLineEdit(self)
+        self.id_textbox.move(80, 50)
+        self.id_textbox.setStyleSheet('background-color: #616161; color: white; font-size: 12px; border: 1px #616161;')
+        self.id_textbox.setGeometry(80, 50, 250, 25)
 
         self.courses_label = QLabel('Courses:', self)
         self.courses_label.move(20, 80)
@@ -118,14 +118,14 @@ class StudentInformationSystemGUI(QWidget): # defines a class that inherits from
         self.show()
 
     def add_student(self):
-        name = self.name_textbox.text() # gets the name, age and course of the student from the text box
-        age = self.age_textbox.text()
+        name = self.name_textbox.text() # gets the name, id and course of the student from the text box
+        id = self.id_textbox.text()
         courses = self.courses_textbox.text()
 
-        if name and age and courses: # checks if all fields are filled out
+        if name and id and courses: # checks if all fields are filled out
             with open('students.txt', 'a') as f: # opens a file called 'students.txt' in append mode
-                f.write(f"{name},{age},{courses}\n") # writes the new student information to the file
-            self.result_textbox.setText(f"Added student: {name} ({age}) {courses}") # sets the result text box to show the added student's information
+                f.write(f"{name},{id},{courses}\n") # writes the new student information to the file
+            self.result_textbox.setText(f"Added student: {name} ({id}) {courses}") # sets the result text box to show the added student's information
             self.clear_fields() # clears the input fields
         else:
             QMessageBox.warning(self, "Warning", "Please fill in all fields!")
@@ -151,24 +151,24 @@ class StudentInformationSystemGUI(QWidget): # defines a class that inherits from
 
     def edit_student(self):
         name = self.name_textbox.text()
-        age = self.age_textbox.text()
+        id = self.id_textbox.text()
         courses = self.courses_textbox.text()
 
-        if name and age and courses:
+        if name and id and courses:
             students = []
             with open('students.txt', 'r') as f:
                 for line in f:
                     student_name, _, _ = line.strip().split(',')
                     if student_name == name:
-                        students.append(f"{name},{age},{courses}\n")
+                        students.append(f"{name},{id},{courses}\n")
                     else:
                         students.append(line)
 
             with open('students.txt', 'w') as f:
                 f.writelines(students)
 
-            print(f"Edited student: {name} ({age}) {courses}")
-            self.result_textbox.setText(f"Edited student: {name} ({age}) {courses}")
+            print(f"Edited student: {name} ({id}) {courses}")
+            self.result_textbox.setText(f"Edited student: {name} ({id}) {courses}")
             self.clear_fields()
         else:
             QMessageBox.warning(self, "Warning", "Please fill in all fields!")
@@ -205,7 +205,7 @@ class StudentInformationSystemGUI(QWidget): # defines a class that inherits from
 
     def clear_fields(self):
         self.name_textbox.clear()
-        self.age_textbox.clear()
+        self.id_textbox.clear()
         self.courses_textbox.clear()
 
 if __name__ == '__main__': # checks if the script is being run directly as the main module
