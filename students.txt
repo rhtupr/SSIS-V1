@@ -1,3 +1,0 @@
-Zyrene,20,BS Information System
-Dianne,20,BS Computer Science
-Pauline,21,BSCS
