@@ -394,6 +394,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
     sis = StudentInformationSystem()
     window = MainWindow(sis)
     window.show()
